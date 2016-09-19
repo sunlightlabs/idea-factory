@@ -125,9 +125,12 @@ class ideaFactoryShortcodes {
 
 							<div class="idea-factory--entry">
 
-								<?php the_title('<h2>','</h2>');
+								<?php the_title('<h2>','</h2>'); ?>
 
-								the_content(); ?>
+								<?php $user_name = get_post_meta($id, '_user_name', true);
+									print '<span class="idea-factory--submitted-by">by ' . $user_name . '</span>'; ?>
+
+								<?php the_content(); ?>
 
 							</div>
 

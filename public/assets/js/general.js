@@ -9,29 +9,70 @@ jQuery(document).ready(function($){
 
 
 	// entry handler
-  	$('#idea-factory--entry--form').submit(function(e) {
+		$('#idea-factory--entry--form').submit(function(e) {
 
-  		var $this = $(this);
+			var $this = $(this);
 
-  		e.preventDefault();
+			e.preventDefault();
 
-	   	if ( $.trim( $('#idea-factory--entryform_title').val() ) === '' || $.trim( $('#idea-factory--entryform_description').val() ) === '' ) {
-	        $(results).html('Title and description are required.');
-	        $this.find('input').css('border-color','#d9534f');
-	        $this.find('textarea').css('border-color','#d9534f');
-	        return false;
-	    }
+			var errors = '';
 
-		$this.find(':submit').attr( 'disabled','disabled' );
+			var title = $('#idea-factory--entryform_title');
+			if ( $.trim( title.val() ) === '' ) {
+				errors += 'Please fill out a title.<br/>'
+				title.addClass('error');
+			}
+			else {
+				title.removeClass('error');
+			}
 
-  		var data = $this.serialize();
+			var name = $('#idea-factory--entryform_name');
+			if ( $.trim( name.val() ) === '' ) {
+				errors += 'Please fill out your name.<br/>'
+				name.addClass('error');
+			}
+			else {
+				name.removeClass('error');
+			}
 
-	  	$.post(ajaxurl, data, function(response) {
-	  		$(results).html(response);
-	  		location.reload();
-	    });
+			var email = $('#idea-factory--entryform_email');
+			if ( $.trim( email.val() ) === '' ) {
+				errors += 'Please fill out your email.<br/>'
+				email.addClass('error');
+			}
+			else {
+				email.removeClass('error');
+			}
 
-    });
+			var description = $('#idea-factory--entryform_description');
+			if ( $.trim( description.val() ) === '' ) {
+				errors += 'Please fill out a description.<br/>'
+				description.addClass('error');
+			}
+			else {
+				description.removeClass('error');
+			}
+
+			if(errors !== '') {
+				$(results).html(errors);
+				return;
+			}
+
+			$this.find(':submit').attr( 'disabled','disabled' );
+
+			var data = $this.serialize();
+
+			$.post(ajaxurl, data, function(response) {
+				if(response.length && response !== '0') {
+					$(results).html(response);
+					$this.find(":submit").attr("disabled", false);
+				}
+				else {
+					location.reload();
+				}
+			});
+
+		});
 
 	$( '.idea-factory' ).live('click', function(e) {
 		e.preventDefault();

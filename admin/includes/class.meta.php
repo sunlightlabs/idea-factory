@@ -12,6 +12,7 @@ class ideaFactoryMeta {
 	function __construct(){
 
 		add_action( 'add_meta_boxes', 					array($this,'add_status_box') );
+		add_action( 'add_meta_boxes', 					array($this,'add_submitter_box') );
 		add_action( 'save_post',						array($this,'save_status_box'), 10, 3 );
 	}
 
@@ -77,8 +78,39 @@ class ideaFactoryMeta {
 		$status 	 = isset( $_POST['idea_status'] ) ? $_POST['idea_status'] : false;
 
 		update_post_meta( $post_id, '_idea_status', sanitize_text_field( trim( $status ) ) );
+	}
 
+	/**
+	*
+	*	Add information about the submitter.
+	*
+	*	@since 1.1
+	*/
+	function add_submitter_box(){
+			add_meta_box(
+				'idea_factory_submitter',
+				__( 'Submitted By', 'idea-factory' ),
+				array($this,'render_submitter_box'), 
+				'ideas',
+				'normal',
+				'core');
+	}
 
+	/**
+	* 	Render submitter metabox
+	*
+	* 	@param WP_Post $post The post object.
+	*	@since 1.1
+	*
+	*/
+	function render_submitter_box( $post ){
+
+		// wp_nonce_field( 'idea_factory_meta', 'idea_factory_nonce' );
+
+		$name = get_post_meta( $post->ID, '_user_name', true );
+		$email = get_post_meta( $post->ID, '_user_email', true );
+
+		print $name .' &lt;<a href="mailto:' . $email .'">' . $email .'</a>&gt;';
 	}
 }
 new ideaFactoryMeta;

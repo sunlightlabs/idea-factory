@@ -347,6 +347,7 @@ function idea_factory_localized_args( $max = '', $paged = '' ){
 if ( !function_exists('idea_factory_submit_modal') ):
 
 	function idea_factory_submit_modal(){
+		global $post;
 
 		$public_can_vote = idea_factory_get_option('if_public_voting','if_settings_main');
 
@@ -372,12 +373,19 @@ if ( !function_exists('idea_factory_submit_modal') ):
 								<label for="idea-title"><?php apply_filters('idea_factory_form_title', _e('Title','idea-factory'));?></label>
 								<input id="idea-factory--entryform_title" type="text" name="idea-title" value="" placeholder="My Awesome Submission">
 
+								<label for="idea-user-name"><?php apply_filters('idea_factory_form_name', _e('Your Name','idea-factory'));?></label>
+								<input id="idea-factory--entryform_name" type="text" name="idea-user-name" value="" placeholder="Your Name">
+
+								<label for="idea-user-email"><?php apply_filters('idea_factory_form_email', _e('Your Email Address','idea-factory'));?></label>
+								<input id="idea-factory--entryform_email" type="text" name="idea-user-email" value="" placeholder="test@example.com">
+
 								<label for="idea-description"><?php apply_filters('idea_factory_form_description', _e('Description','idea-factory'));?></label>
 								<textarea id="idea-factory--entryform_description" form="idea-factory--entry--form" name="idea-description" value="" placeholder="Make the description meaningful!"></textarea>
 
 								<?php do_action('idea_factory_inside_form_bottom');?>
 
-								<input type="hidden" name="action" value="process_entry">
+								<input type="hidden" name="post-parent" value="<?php echo $post->ID ?>"/>
+								<input type="hidden" name="action" value="process_entry"/>
 								<input type="hidden" name="nonce" value="<?php echo wp_create_nonce('if-entry-nonce'); ?>"/>
 
 								<div class="idea-factory-modal-footer">
