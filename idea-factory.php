@@ -7,10 +7,10 @@
  	* 	@link      			http://nickhaskins.com
  	*	@copyright 			2015 Your Mom
  	*
- 	* 	Plugin Name:       Idea Factory
+ 	* 	Plugin Name:       Idea Factory (Sunlight Fork!)
  	* 	Plugin URI:        http://wpideafactory.com
  	* 	Description:       Front-end user submission and voting system.
- 	* 	Version:           1.2
+ 	* 	Version:           99999.9
  	* 	GitHub Plugin URI: https://github.com/tmeister/idea-factory
  	*	Author:            Nick Haskins
 	* 	Author URI:        http://nickhaskins.com
